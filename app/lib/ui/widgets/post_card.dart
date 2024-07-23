@@ -22,14 +22,11 @@ class PostCard extends StatelessWidget {
             ),
             title: const Text('Lipi Newaj'),
             subtitle: const Text('Nov 22, 2021'),
-            trailing: Container(
-              child: Row(),
-            )
-            // trailing: IconButton(
+            trailing: IconButton(
               
-            //   icon: const Icon(Icons.favorite),
-            //   onPressed: () {},
-            // ),
+              icon: const Icon(Icons.favorite),
+              onPressed: () {},
+            ),
           ),
           GestureDetector(
             onLongPress: () => _viewStory(context),

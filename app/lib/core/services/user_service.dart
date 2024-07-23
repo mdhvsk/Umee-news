@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:app/core/models/user.dart';
+import 'supabase_client.dart';
+
+class UserService {
+  late SupabaseClient _client;
+
+  UserService() {
+    _initializeClient();
+  }
+
+  Future<void> _initializeClient() async {
+    final instance = await SupabaseClientSingleton.instance;
+    _client = instance.client;
+
+  }
+
+  Future<UserModel?> getUser(String username) async {
+    try {
+      final response =
+          await _client.from('users').select().eq('username', username).single();
+      debugPrint(response.toString());
+      debugPrint(response.runtimeType.toString());
+      UserModel model = UserModel.fromJson(response);
+      debugPrint(model.runtimeType.toString());
+
+      return model;
+    } on PostgrestException catch (error) {
+      debugPrint('Error fetching user: ${error.message}');
+      return null;
+    } catch (e) {
+      debugPrint('Unexpected error: $e');
+      return null;
+    }
+
+    // Handle the response
+  }
+
+  void helloWorld(){
+
+    debugPrint("Its not you its SUPABASE");
+  }
+
+  // Other user-related methods...
+}

@@ -1,3 +1,4 @@
+import 'package:app/ui/screens/api_screen.dart';
 import 'package:app/ui/screens/feed_screen.dart';
 import 'package:app/ui/screens/story_form_screen.dart';
 import 'package:app/ui/screens/article_screen.dart';
@@ -68,7 +69,7 @@ class NavBar extends StatelessWidget {
         screen = const StoryFormScreen();
         break;
       case 2:
-        screen = const ArticleScreen();
+        screen = const ApiScreen();
         break;
       default:
         return;

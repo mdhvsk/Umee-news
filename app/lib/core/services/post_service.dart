@@ -19,7 +19,7 @@ class PostService {
     }
   }
 
-    Future<PostModel?> getPost(int id) async {
+  Future<PostModel?> getPost(int id) async {
     try {
       final response =
           await _client.from('posts').select().eq('id', id).single();
@@ -58,5 +58,37 @@ class PostService {
     }
 
     // Handle the response
+  }
+
+  Future<String?> insertPost(
+      int userId, String title, String content, String? imageId) async {
+    try {
+      await _initializeClient();
+      if (imageId == null) {
+        final postInfo = {
+          "user_id": userId,
+          "title": title,
+          "content": content,
+        };
+        final response = await _client.from('posts').insert(postInfo);
+        debugPrint('Post w/o image inserted successfully');
+      } else {
+        final postInfo = {
+          "user_id": userId,
+          "title": title,
+          "content": content,
+          "image_id": imageId,
+        };
+        final response = await _client.from('posts').insert(postInfo);
+        debugPrint('Post with image inserted successfully');
+      }
+
+    } on PostgrestException catch (error) {
+      debugPrint('Error fetching user: ${error.message}');
+      return null;
+    } catch (e) {
+      debugPrint('Unexpected error: $e');
+      return null;
+    }
   }
 }

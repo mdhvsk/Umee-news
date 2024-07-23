@@ -85,12 +85,31 @@ class LikeService {
     }
   }
 
-  Future<void> deleteLike(int postId, int userId) async{
-    try{
+  Future<void> deleteLike(int postId, int userId) async {
+    try {
       await _initializeClient();
-      final response =
-          await _client.from('likes').delete().match({'user_id': userId, 'post_id': postId});
+      final response = await _client
+          .from('likes')
+          .delete()
+          .match({'user_id': userId, 'post_id': postId});
       debugPrint('Like deleted successfully');
+      return;
+    } on PostgrestException catch (error) {
+      debugPrint('Error fetching user: ${error.message}');
+      return;
+    } catch (e) {
+      debugPrint('Unexpected error: $e');
+      return;
+    }
+  }
+
+  Future<void> insertLike(int postId, int userId) async {
+    try {
+      await _initializeClient();
+      final response = await _client
+          .from('likes')
+          .insert({'user_id': userId, 'post_id': postId});
+      debugPrint('Like added successfully');
       return;
     } on PostgrestException catch (error) {
       debugPrint('Error fetching user: ${error.message}');

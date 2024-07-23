@@ -1,24 +1,24 @@
 
 class LikeModel{
   final int id;
-  final int user_id;
-  final int post_id;
+  final int userId;
+  final int postId;
 
-  LikeModel({required this.id, required this.user_id, required this.post_id});
+  LikeModel({required this.id, required this.userId, required this.postId});
 
   factory LikeModel.fromJson(Map<String, dynamic> json) {
     return LikeModel(
       id: json['id'],
-      user_id: json['user_id'],
-      post_id: json['post_id'],
+      userId: json['user_id'],
+      postId: json['post_id'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'user_id': user_id,
-      'post_id': post_id,
+      'user_id': userId,
+      'post_id': postId,
     };
   }
 

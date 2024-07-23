@@ -1,8 +1,11 @@
 import 'dart:io';
+import 'package:app/core/services/post_service.dart';
 import 'package:app/core/services/supabase_client.dart';
+import 'package:app/ui/screens/feed_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:path/path.dart' as path;
 
@@ -20,8 +23,11 @@ class _StoryFormScreenState extends State<StoryFormScreen> {
   final ImagePicker _picker = ImagePicker();
   bool _isUploading = false;
   late SupabaseClient _client;
-  static String get supabaseBucketName => dotenv.env['SUPABASE_BUCKET_NAME'] ?? "";
-
+  static String get supabaseBucketName =>
+      dotenv.env['SUPABASE_BUCKET_NAME'] ?? "";
+  PostService postService = PostService();
+  String? submitError;
+  String? imageId;
 
   _StoryFormScreenState() {
     _initializeClient();
@@ -56,13 +62,15 @@ class _StoryFormScreenState extends State<StoryFormScreen> {
           'uploads/${DateTime.now().toIso8601String()}$fileExtension';
 
       String response = await _client.storage
-          .from(supabaseBucketName) // Replace with your bucket name
+          .from(supabaseBucketName)
           .upload(filePath, _image!);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Image uploaded successfully!')),
       );
-      debugPrint(response);
+      setState(() {
+        imageId = response;
+      });
       return response;
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -75,6 +83,32 @@ class _StoryFormScreenState extends State<StoryFormScreen> {
     }
   }
 
+  void _navigateHome(BuildContext context) {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => const FeedScreen()),
+      (Route<dynamic> route) => false,
+    );
+  }
+
+  Future<void> handleFormSubmit() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      int? userId = prefs.getInt('user_id');
+      if (userId == null) {
+        setState(() {
+          submitError = "Not signed in";
+        });
+        return;
+      }
+      String? uploaded_image_id = await _uploadImage();
+      debugPrint("Image ID: $uploaded_image_id");
+      postService.insertPost(
+          userId, _titleController.text, _storyController.text, uploaded_image_id);
+      _navigateHome(context);
+    } catch (err) {
+      debugPrint(err.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,47 +133,43 @@ class _StoryFormScreenState extends State<StoryFormScreen> {
         ),
         body: SingleChildScrollView(
             padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildInputField(
-                    controller: _storyController,
-                    label: 'News Story Title',
-                    maxLines: 1),
-                SizedBox(height: 16),
-                _buildInputField(
-                    controller: _storyController,
-                    label: 'Story Text',
-                    maxLines: 5),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle form submission
-                  },
-                  child: Text('Preview Request'),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50),
-                  ),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              _buildInputField(
+                  controller: _titleController,
+                  label: 'News Story Title',
+                  maxLines: 1),
+              SizedBox(height: 16),
+              _buildInputField(
+                  controller: _storyController,
+                  label: 'Story Text',
+                  maxLines: 5),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: () => handleFormSubmit(),
+                child: Text('Preview Request'),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(double.infinity, 50),
                 ),
-                        ElevatedButton(
-          onPressed: _pickImage,
-          child: const Text('Pick Image'),
-        ),
-        const SizedBox(height: 20),
-        if (_image != null) ...[
-          Image.file(_image!, height: 200),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: _isUploading ? null : _uploadImage,
-            child: _isUploading
-                ? const CircularProgressIndicator()
-                : const Text('Upload to Supabase'),
-          ),
+              ),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: const Text('Pick Image'),
+              ),
+              const SizedBox(height: 20),
+              if (_image != null) ...[
+                Image.file(_image!, height: 200),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _isUploading ? null : _uploadImage,
+                  child: _isUploading
+                      ? const CircularProgressIndicator()
+                      : const Text('Upload to Supabase'),
+                ),
               ],
             ])));
   }
 }
-
 
 Widget _buildInputField(
     {required TextEditingController controller,

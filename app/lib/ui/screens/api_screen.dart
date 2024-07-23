@@ -120,9 +120,26 @@ class _ApiScreenState extends State<ApiScreen> {
                 final prefs = await SharedPreferences.getInstance();
                 String? first_name = prefs.getString('first_name');
                 debugPrint(first_name);
-                
               },
               child: const Text('Check shared preferences'),
+              style: ElevatedButton.styleFrom(
+                iconColor: Colors.blue,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                textStyle:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                int? userId = prefs.getInt('user_id');
+                if(userId == null) return;
+                likeService.insertLike(4, userId);
+              },
+              child: const Text('Check like post'),
               style: ElevatedButton.styleFrom(
                 iconColor: Colors.blue,
                 padding: const EdgeInsets.symmetric(vertical: 16),

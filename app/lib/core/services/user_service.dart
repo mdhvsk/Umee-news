@@ -37,6 +37,28 @@ class UserService {
     // Handle the response
   }
 
+  Future<List<UserModel?>?> getPosts() async {
+    try {
+      await _initializeClient();
+      final response = await _client.from('users').select();
+      debugPrint(response.toString());
+      debugPrint(response.runtimeType.toString());
+      List<UserModel> models =
+          response.map((json) => UserModel.fromJson(json)).toList();
+      debugPrint(models.runtimeType.toString());
+      models.map((model) => debugPrint(model.toString()));
+      return models;
+    } on PostgrestException catch (error) {
+      debugPrint('Error fetching user: ${error.message}');
+      return null;
+    } catch (e) {
+      debugPrint('Unexpected error: $e');
+      return null;
+    }
+
+    // Handle the response
+  }
+
   void helloWorld(){
 
     debugPrint("Its not you its SUPABASE");

@@ -1,28 +1,33 @@
-// class PostModel {
+class PostModel {
 
-//   final int id;
-//   final int user_id;
-//   final String image_id;
-//   final String content;
-//   final DateTime created_at;
+  final int id;
+  final int user_id;
+  final String? image_id;
+  final String content;
+  final String title;
+  final DateTime created_at;
 
-//   PostModel({required this.id, required this.user_id, this.image_id, required this.lastName});
+  PostModel({required this.id, required this.user_id, this.image_id, required this.content, required this.title, required this.created_at});
 
-//   factory PostModel.fromJson(Map<String, dynamic> json) {
-//     return PostModel(
-//       id: json['id'],
-//       username: json['username'],
-//       firstName: json['first_name'],
-//       lastName: json['last_name'],
-//     );
-//   }
+  factory PostModel.fromJson(Map<String, dynamic> json) {
+    return PostModel(
+      id: json['id'],
+      user_id: json['user_id'],
+      image_id: json['image_id'],
+      content: json['content'],
+      title: json['title'],
+      created_at: json['created_at']
+    );
+  }
 
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'id': id,
-//       'username': username,
-//       'first_name': firstName,
-//       'last_name': lastName
-//     };
-//   }
-// }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'user_id': user_id,
+      'image_id': image_id,
+      'content': content,
+      'title': title,
+      'created_at': created_at
+    };
+  }
+}

@@ -33,7 +33,8 @@ class PostCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.network(
-                'https://cdn.britannica.com/71/94371-050-293AE931/Mountains-region-Ten-Peaks-Moraine-Lake-Alberta.jpg',
+                "https://akqumrzgyznxqykitvih.supabase.co/storage/v1/object/sign/post-images/uploads/2024-07-23T01:12:25.177199.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwb3N0LWltYWdlcy91cGxvYWRzLzIwMjQtMDctMjNUMDE6MTI6MjUuMTc3MTk5LmpwZyIsImlhdCI6MTcyMTcyMjQ5NSwiZXhwIjoxNzIyMzI3Mjk1fQ.4hzKr6SCOwEHwcBZbzF0e525aXjIMH_8YYtDKWTKIiA&t=2024-07-23T08%3A14%3A55.538Z",
+                // 'https://cdn.britannica.com/71/94371-050-293AE931/Mountains-region-Ten-Peaks-Moraine-Lake-Alberta.jpg',
                 fit: BoxFit.fill,
                 height: 200,
                 width: double.infinity

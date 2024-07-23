@@ -1,4 +1,6 @@
-import 'package:app/home_page.dart';
+import 'package:app/ui/screens/feed_screen.dart';
+import 'package:app/ui/screens/login_screen.dart';
+import 'package:app/ui/screens/story_form_screen.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -6,6 +8,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomePage());
+    return const MaterialApp(home: LoginScreen());
   }
 }

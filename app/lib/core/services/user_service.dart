@@ -24,7 +24,6 @@ class UserService {
       debugPrint(response.runtimeType.toString());
       UserModel model = UserModel.fromJson(response);
       debugPrint(model.runtimeType.toString());
-
       return model;
     } on PostgrestException catch (error) {
       debugPrint('Error fetching user: ${error.message}');
@@ -33,8 +32,6 @@ class UserService {
       debugPrint('Unexpected error: $e');
       return null;
     }
-
-    // Handle the response
   }
 
   Future<List<UserModel?>?> getPosts() async {

@@ -15,7 +15,6 @@ class StoryFormScreen extends StatefulWidget {
 
 class _StoryFormScreenState extends State<StoryFormScreen> {
   final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _subtitleController = TextEditingController();
   final TextEditingController _storyController = TextEditingController();
   File? _image;
   final ImagePicker _picker = ImagePicker();
@@ -43,8 +42,8 @@ class _StoryFormScreenState extends State<StoryFormScreen> {
     }
   }
 
-  Future<void> _uploadImage() async {
-    if (_image == null) return;
+  Future<String?> _uploadImage() async {
+    if (_image == null) return null;
 
     setState(() {
       _isUploading = true;
@@ -56,13 +55,15 @@ class _StoryFormScreenState extends State<StoryFormScreen> {
       final String filePath =
           'uploads/${DateTime.now().toIso8601String()}$fileExtension';
 
-      await _client.storage
+      String response = await _client.storage
           .from(supabaseBucketName) // Replace with your bucket name
           .upload(filePath, _image!);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Image uploaded successfully!')),
       );
+      debugPrint(response);
+      return response;
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error uploading image: $error')),

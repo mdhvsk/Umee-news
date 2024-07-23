@@ -19,6 +19,25 @@ class PostService {
     }
   }
 
+    Future<PostModel?> getPost(int id) async {
+    try {
+      final response =
+          await _client.from('posts').select().eq('id', id).single();
+      debugPrint(response.toString());
+      debugPrint(response.runtimeType.toString());
+      PostModel model = PostModel.fromJson(response);
+      debugPrint(model.runtimeType.toString());
+
+      return model;
+    } on PostgrestException catch (error) {
+      debugPrint('Error fetching user: ${error.message}');
+      return null;
+    } catch (e) {
+      debugPrint('Unexpected error: $e');
+      return null;
+    }
+  }
+
   Future<List<PostModel?>?> getPosts() async {
     try {
       await _initializeClient();

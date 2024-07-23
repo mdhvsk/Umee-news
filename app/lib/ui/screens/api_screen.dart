@@ -1,7 +1,10 @@
+import 'package:app/core/models/user.dart';
+import 'package:app/core/services/like_service.dart';
 import 'package:app/core/services/post_service.dart';
 import 'package:app/core/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiScreen extends StatefulWidget {
   const ApiScreen({super.key});
@@ -11,11 +14,10 @@ class ApiScreen extends StatefulWidget {
 }
 
 class _ApiScreenState extends State<ApiScreen> {
-
   static String get supabaseUrl => dotenv.env['SUPABASE_URL'] ?? '';
   UserService userService = UserService();
   PostService postService = PostService();
-
+  LikeService likeService = LikeService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +25,9 @@ class _ApiScreenState extends State<ApiScreen> {
         body: Column(
           children: [
             ElevatedButton(
-              onPressed: () {
-                userService.getUser("new_user");
+              onPressed: () async {
+                UserModel? user = await userService.getUser("new_user");
+                if (user == null) debugPrint("No user");
               },
               child: const Text('Get User Test'),
               style: ElevatedButton.styleFrom(
@@ -72,6 +75,54 @@ class _ApiScreenState extends State<ApiScreen> {
                 userService.getPosts();
               },
               child: const Text('Check get users'),
+              style: ElevatedButton.styleFrom(
+                iconColor: Colors.blue,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                textStyle:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                likeService.getLikes(1);
+              },
+              child: const Text('Check get likes'),
+              style: ElevatedButton.styleFrom(
+                iconColor: Colors.blue,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                textStyle:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                likeService.getLikeCount(1);
+              },
+              child: const Text('Check get like'),
+              style: ElevatedButton.styleFrom(
+                iconColor: Colors.blue,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                textStyle:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                String? first_name = prefs.getString('first_name');
+                debugPrint(first_name);
+                
+              },
+              child: const Text('Check shared preferences'),
               style: ElevatedButton.styleFrom(
                 iconColor: Colors.blue,
                 padding: const EdgeInsets.symmetric(vertical: 16),

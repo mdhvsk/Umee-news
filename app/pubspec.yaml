@@ -38,6 +38,9 @@ dependencies:
   supabase_flutter: ^2.5.9
   flutter_dotenv: ^5.0.2
   image_picker: ^1.0.0
+  shared_preferences: ^2.0.0
+
+
 
 
 

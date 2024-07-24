@@ -37,6 +37,5 @@ Umee news allows users to:
     * Go to the app directory and run: `flutter run`.
 5. **Contributing**: 
     * Fork the repository and create a new branch for your feature or bug fix.
-    * Follow the project's coding standards and guidelines.
-Submit a pull request with a clear description of your changes.
+    * Submit a pull request with a clear description of your changes.
 

@@ -10,8 +10,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.lightBlue,
+          scaffoldBackgroundColor: Color.fromRGBO(247,247,247, 20),
         ),
         home: SigninScreen());
   }

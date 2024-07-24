@@ -20,16 +20,16 @@ class _SigninScreenState extends State<SigninScreen> {
   void _handleLogin(BuildContext context, String username) async {
     UserModel? user = await userService.getUser(username);
     debugPrint(user.toString());
-    if(user == null) {
+    if (user == null) {
       setState(() {
         _signInError = "Invalid username/password";
       });
       debugPrint("No user found by the username" + username);
       return;
-    };
+    }
+    ;
     _storeUserData(user);
     _login(context);
-
   }
 
   Future<void> _storeUserId(String userId) async {
@@ -42,19 +42,18 @@ class _SigninScreenState extends State<SigninScreen> {
     await prefs.setString('first_name', userId);
   }
 
-    Future<void> _storeUserData(UserModel user) async {
+  Future<void> _storeUserData(UserModel user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('first_name', user.firstName);
     await prefs.setString('last_name', user.lastName);
     await prefs.setInt('user_id', user.id);
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
+
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -82,50 +81,30 @@ class _SigninScreenState extends State<SigninScreen> {
                 maxLines: 1,
                 password: false,
                 error: _signInError),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
+
+            const Text(
+              'Password',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            SizedBox(height: 8),
             _buildInputField(
                 controller: _passwordController,
                 label: 'Password',
                 maxLines: 1,
                 password: true,
                 error: _signInError),
-            // TextField(
-            //   decoration: InputDecoration(
-            //     hintText: 'Enter your username',
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(8),
-            //     ),
-            //     contentPadding:
-            //         const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            //   ),
-            // ),
-            // const SizedBox(height: 24),
-            // const Text(
-            //   'Password',
-            //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            // ),
-            // const SizedBox(height: 8),
-            // TextField(
-            //   obscureText: true,
-            //   decoration: InputDecoration(
-            //     hintText: 'Enter your password',
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(8),
-            //     ),
-            //     contentPadding:
-            //         const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            //     suffixIcon: Icon(Icons.visibility_off),
-            //   ),
-            // ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () => _handleLogin(context, _usernameController.text),
               child: const Text('Login to UMee News'),
               style: ElevatedButton.styleFrom(
-                iconColor: Colors.blue,
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue[700],
+                
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 textStyle:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -135,9 +114,9 @@ class _SigninScreenState extends State<SigninScreen> {
             Center(
               child: TextButton(
                 onPressed: () {},
-                child: const Text(
+                child: Text(
                   'Forgot password',
-                  style: TextStyle(color: Colors.blue),
+                  style: TextStyle(color: Colors.blue[700]),
                 ),
               ),
             ),
@@ -149,12 +128,11 @@ class _SigninScreenState extends State<SigninScreen> {
                   const Text('Powered by'),
                   const SizedBox(width: 4),
                   Text(
-                    'Saman Bank',
+                    'Mdhvsk Labs',
                     style: TextStyle(
                         color: Colors.blue[700], fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(width: 4),
-                  Icon(Icons.ac_unit, color: Colors.blue[700], size: 16),
                 ],
               ),
             ),
@@ -181,18 +159,21 @@ Widget _buildInputField(
   return TextFormField(
     controller: controller,
     obscureText: password,
+    
     decoration: InputDecoration(
       labelText: label,
       errorText: error,
       alignLabelWithHint: false,
       floatingLabelBehavior: FloatingLabelBehavior.always,
-
+      filled: true,
+      fillColor: Colors.white,
+      // border: InputBorder.none,
       // prefixIcon: Icon(icon),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(10),
       ),
     ),
-    textAlignVertical: TextAlignVertical.top,
+    textAlignVertical: TextAlignVertical.center,
     maxLines: maxLines,
   );
 }

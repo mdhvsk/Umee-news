@@ -38,7 +38,7 @@ class NavBar extends StatelessWidget {
           items: [
             _buildNavItem(context, Icons.home_outlined, 0),
             _buildNavItem(context, Icons.add_circle_outline, 1),
-            _buildNavItem(context, Icons.person_outline, 2),
+            // _buildNavItem(context, Icons.person_outline, 2),
           ],
         ),
       ),
@@ -51,7 +51,7 @@ class NavBar extends StatelessWidget {
         onLongPress: () => _navigateToScreen(context, index),
         child: Icon(
           icon,
-          color: selectedIndex == index ? Colors.yellow : Colors.white,
+          color: selectedIndex == index ? Colors.blue[700] : Colors.white,
           size: 28,
         ),
       ),

@@ -28,6 +28,7 @@ class LikeService {
           .eq('user_id', userId)
           .eq('post_id', postId);
       if (response == null) return false;
+      if (response.length == 0) return false;
       return true; 
     } on PostgrestException catch (error) {
       debugPrint('Error fetching user: ${error.message}');

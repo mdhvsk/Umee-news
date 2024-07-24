@@ -41,7 +41,7 @@ class PostService {
   Future<List<PostModel?>?> getPosts() async {
     try {
       await _initializeClient();
-      final response = await _client.from('posts').select();
+      final response = await _client.from('posts').select().order('created_at', ascending: false);
       // debugPrint(response.toString());
       // debugPrint(response.runtimeType.toString());
       List<PostModel> models =

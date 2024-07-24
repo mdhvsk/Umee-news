@@ -102,8 +102,8 @@ class _StoryFormScreenState extends State<StoryFormScreen> {
       }
       String? uploaded_image_id = await _uploadImage();
       debugPrint("Image ID: $uploaded_image_id");
-      postService.insertPost(
-          userId, _titleController.text, _storyController.text, uploaded_image_id);
+      postService.insertPost(userId, _titleController.text,
+          _storyController.text, uploaded_image_id);
       _navigateHome(context);
     } catch (err) {
       debugPrint(err.toString());
@@ -135,6 +135,17 @@ class _StoryFormScreenState extends State<StoryFormScreen> {
             padding: EdgeInsets.all(16.0),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const SizedBox(height: 20),
+              Text(
+                'Submit Story',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue[700],
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
               _buildInputField(
                   controller: _titleController,
                   label: 'News Story Title',
@@ -145,27 +156,41 @@ class _StoryFormScreenState extends State<StoryFormScreen> {
                   label: 'Story Text',
                   maxLines: 5),
               const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () => handleFormSubmit(),
-                child: Text('Preview Request'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(100, 50),
+                    foregroundColor: Colors.blue[700],
+                    backgroundColor: Colors.white,
+                  ),
+                  onPressed: _pickImage,
+                  child: const Text('Pick Image'),
                 ),
               ),
+              const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: _pickImage,
-                child: const Text('Pick Image'),
+                onPressed: () => handleFormSubmit(),
+                child: Text('Upload Story'),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(double.infinity, 50),
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.blue[700],
+                ),
               ),
               const SizedBox(height: 20),
               if (_image != null) ...[
-                Image.file(_image!, height: 200),
+                Image.file(_image!, height: 200, alignment: Alignment.center),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _isUploading ? null : _uploadImage,
-                  child: _isUploading
-                      ? const CircularProgressIndicator()
-                      : const Text('Upload to Supabase'),
-                ),
+                // ElevatedButton(
+                //   style: ElevatedButton.styleFrom(
+                // foregroundColor: Colors.white,
+                // backgroundColor: Colors.blue[700],
+                //   ),
+                //   onPressed: _isUploading ? null : _uploadImage,
+                //   child: _isUploading
+                //       ? const CircularProgressIndicator()
+                //       : const Text('Upload to Supabase'),
+                // ),
               ],
             ])));
   }
@@ -178,14 +203,18 @@ Widget _buildInputField(
   return TextField(
     controller: controller,
     decoration: InputDecoration(
+      filled: true,
+      fillColor: Colors.white,
+      // border: InputBorder.none,
+      // prefixIcon: Icon(icon),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       labelText: label,
       alignLabelWithHint: false,
       floatingLabelBehavior: FloatingLabelBehavior.always,
 
       // prefixIcon: Icon(icon),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
     ),
     textAlignVertical: TextAlignVertical.top,
     maxLines: maxLines,

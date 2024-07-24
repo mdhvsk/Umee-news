@@ -52,19 +52,19 @@ class PostCardService {
         // debugPrint("$postId, $title, $content, $created_at, $image_id");
         int likeCount = 0;
         likeCount = await likeService.getLikeCount(articleModels[i]!.id);
-        debugPrint(likeCount.toString());
+        debugPrint(articleModels[i]!.id.toString());
         bool? isLiked =
             await likeService.getLike(userId, articleModels[i]!.id);
+            
         if (isLiked == null) isLiked = false;
 
-        UserModel? user = await userService.getUserById(userId);
+        UserModel? user = await userService.getUserById(articleModels[i]!.user_id);
         if (user == null) {
           debugPrint("no user");
           continue;
         };
         String first_name = user.firstName;
         String last_name = user.lastName;
-
         String? image_url = null;
         if (image_id != null) {
           image_url = await imageService.getImageSignedUrl(image_id);
@@ -83,8 +83,10 @@ class PostCardService {
             isLiked: isLiked);
 
         postCardModels.add(newModel);
+        debugPrint(newModel.isLiked.toString());
       }
-    debugPrint(postCardModels.toString());
+    PostCardModel sample = postCardModels[0];
+    return postCardModels;
     } catch (err) {
       debugPrint(err.toString());
     }

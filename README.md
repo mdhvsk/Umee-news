@@ -33,7 +33,7 @@ Umee news allows users to:
     * Set up Supabase url and anon key, see `.env.example` for details.
 4. **Run the App**:
     * Connect to a device/emulator.
-    * Run: `flutter run`.
+    * Go to the app directory and run: `flutter run`.
 5. **Contributing**: 
     * Fork the repository and create a new branch for your feature or bug fix.
     * Follow the project's coding standards and guidelines.

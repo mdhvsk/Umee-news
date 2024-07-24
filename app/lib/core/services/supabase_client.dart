@@ -22,7 +22,7 @@ class SupabaseClientSingleton {
     await Supabase.initialize(
       url: SupabaseConfig.supabaseUrl,
       anonKey: SupabaseConfig.supabaseAnonKey,
-      debug: true // Set to true for development
+      debug: true 
     );
     _client = Supabase.instance.client;
   }

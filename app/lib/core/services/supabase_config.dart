@@ -6,6 +6,5 @@ class SupabaseConfig {
   static String get supabaseUrl => dotenv.env['SUPABASE_URL'] ?? "";
   static String get supabaseAnonKey => dotenv.env['SUPABASE_ANON_KEY'] ?? "";
   
-  // You might add other configuration constants here
-  static const int timeoutDuration = 15; // in seconds
+  static const int timeoutDuration = 15;
 }

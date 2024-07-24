@@ -23,10 +23,10 @@ class PostService {
     try {
       final response =
           await _client.from('posts').select().eq('id', id).single();
-      debugPrint(response.toString());
-      debugPrint(response.runtimeType.toString());
+      // debugPrint(response.toString());
+      // debugPrint(response.runtimeType.toString());
       PostModel model = PostModel.fromJson(response);
-      debugPrint(model.runtimeType.toString());
+      // debugPrint(model.runtimeType.toString());
 
       return model;
     } on PostgrestException catch (error) {
@@ -42,12 +42,12 @@ class PostService {
     try {
       await _initializeClient();
       final response = await _client.from('posts').select();
-      debugPrint(response.toString());
-      debugPrint(response.runtimeType.toString());
+      // debugPrint(response.toString());
+      // debugPrint(response.runtimeType.toString());
       List<PostModel> models =
           response.map((json) => PostModel.fromJson(json)).toList();
-      debugPrint(models.runtimeType.toString());
-      models.map((model) => debugPrint(model.toString()));
+      // debugPrint(models.runtimeType.toString());
+      // models.map((model) => debugPrint(model.toString()));
       return models;
     } on PostgrestException catch (error) {
       debugPrint('Error fetching user: ${error.message}');

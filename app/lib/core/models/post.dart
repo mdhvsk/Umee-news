@@ -7,6 +7,7 @@ class PostModel {
   final String title;
   final DateTime created_at;
 
+
   PostModel({required this.id, required this.user_id, this.image_id, required this.content, required this.title, required this.created_at});
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
@@ -16,7 +17,8 @@ class PostModel {
       image_id: json['image_id'],
       content: json['content'],
       title: json['title'],
-      created_at: json['created_at']
+      created_at: DateTime.parse(json['created_at']),
+
     );
   }
 

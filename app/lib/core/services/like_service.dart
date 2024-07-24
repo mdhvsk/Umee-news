@@ -20,19 +20,15 @@ class LikeService {
     }
   }
 
-  Future<LikeModel?> getLike(int userId, int postId) async {
+  Future<bool?> getLike(int userId, int postId) async {
     try {
       final response = await _client
           .from('likes')
           .select()
           .eq('user_id', userId)
-          .eq('post_id', postId)
-          .single();
-      debugPrint(response.toString());
-      debugPrint(response.runtimeType.toString());
-      LikeModel model = LikeModel.fromJson(response);
-      debugPrint(model.runtimeType.toString());
-      return model;
+          .eq('post_id', postId);
+      if (response == null) return false;
+      return true; 
     } on PostgrestException catch (error) {
       debugPrint('Error fetching user: ${error.message}');
       return null;
@@ -68,13 +64,13 @@ class LikeService {
       await _initializeClient();
       final response =
           await _client.from('likes').select().eq('post_id', postId);
-      debugPrint(response.toString());
-      debugPrint(response.runtimeType.toString());
+      // debugPrint(response.toString());
+      // debugPrint(response.runtimeType.toString());
       List<LikeModel> models =
           response.map((json) => LikeModel.fromJson(json)).toList();
-      debugPrint(models.runtimeType.toString());
-      models.map((model) => debugPrint(model.toString()));
-      debugPrint(models.length.toString());
+      // debugPrint(models.runtimeType.toString());
+      // models.map((model) => debugPrint(model.toString()));
+      // debugPrint(models.length.toString());
       return models.length;
     } on PostgrestException catch (error) {
       debugPrint('Error fetching user: ${error.message}');

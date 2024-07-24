@@ -66,7 +66,7 @@ class _StoryFormScreenState extends State<StoryFormScreen> {
           .upload(filePath, _image!);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Image uploaded successfully!')),
+        const SnackBar(content: Text('Story uploaded successfully!')),
       );
       setState(() {
         imageId = response;

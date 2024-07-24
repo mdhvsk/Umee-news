@@ -1,5 +1,6 @@
-import 'package:app/ui/screens/api_screen.dart';
+import 'package:app/core/mocks/api_screen.dart';
 import 'package:app/ui/screens/feed_screen.dart';
+import 'package:app/ui/screens/setting_screen.dart';
 import 'package:app/ui/screens/story_form_screen.dart';
 import 'package:app/ui/screens/article_screen.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class NavBar extends StatelessWidget {
           items: [
             _buildNavItem(context, Icons.home_outlined, 0),
             _buildNavItem(context, Icons.add_circle_outline, 1),
-            // _buildNavItem(context, Icons.person_outline, 2),
+            _buildNavItem(context, Icons.settings_outlined, 2),
           ],
         ),
       ),
@@ -69,7 +70,7 @@ class NavBar extends StatelessWidget {
         screen = const StoryFormScreen();
         break;
       case 2:
-        screen = const ApiScreen();
+        screen = const SettingScreen();
         break;
       default:
         return;

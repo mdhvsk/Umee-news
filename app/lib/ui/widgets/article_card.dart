@@ -102,7 +102,7 @@ class _ArticleCardState extends State<ArticleCard> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.network(_model.imageUrl!,
-                    fit: BoxFit.fill, height: 200, width: double.infinity),
+                    fit: BoxFit.cover, height: 200, width: double.infinity),
               ),
             ),
           ] else ...[

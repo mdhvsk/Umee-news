@@ -1,6 +1,5 @@
 
 import 'package:app/core/services/supabase_client.dart';
-import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ImageService{
@@ -28,7 +27,6 @@ int slashIndex = file.indexOf('/');
   String response = await _client.storage
   .from(bucket)
   .createSignedUrl(path, 3600);
-  // debugPrint(response);
   return response;
   }
 

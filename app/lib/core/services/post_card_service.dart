@@ -1,4 +1,3 @@
-import 'package:app/core/models/like.dart';
 import 'package:app/core/models/post.dart';
 import 'package:app/core/models/post_card.dart';
 import 'package:app/core/models/user.dart';
@@ -55,7 +54,7 @@ class PostCardService {
         debugPrint(articleModels[i]!.id.toString());
         bool? isLiked =
             await likeService.getLike(userId, articleModels[i]!.id);
-            
+
         if (isLiked == null) isLiked = false;
 
         UserModel? user = await userService.getUserById(articleModels[i]!.user_id);

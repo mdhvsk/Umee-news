@@ -10,7 +10,11 @@ class ArticleListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint(postCardModels.toString());
     if (postCardModels == null || postCardModels!.isEmpty) {
-      return Center(child: Text('No articles available'));
+      return Center(child: Column(children: [
+            SizedBox(height: 8),
+            CircularProgressIndicator()
+
+      ],));
     }
     return SingleChildScrollView(
       child: Column(

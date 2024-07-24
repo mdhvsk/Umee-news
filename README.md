@@ -7,6 +7,7 @@ Umee news allows users to:
 * Post their own news stories
 * Like and comment on articles
 
+![umee-news](https://github.com/user-attachments/assets/9f44ccb8-bcae-4fa3-aa8a-849ad8555c9b)
 
 ## Design Choices 
 

@@ -1,15 +1,10 @@
-import 'package:app/core/models/like.dart';
-import 'package:app/core/models/post.dart';
 import 'package:app/core/models/post_card.dart';
 import 'package:app/core/services/like_service.dart';
 import 'package:app/core/services/post_card_service.dart';
 import 'package:app/core/services/post_service.dart';
-import 'package:app/ui/widgets/article_card.dart';
 import 'package:app/ui/widgets/article_list_widget.dart';
 import 'package:app/ui/widgets/nav_bar.dart';
-import 'package:app/ui/widgets/post_card.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -86,7 +81,7 @@ class _FeedScreenState extends State<FeedScreen> {
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Color.fromRGBO(247,247,247, 20),
-        
+
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -42,12 +42,8 @@ class PostService {
     try {
       await _initializeClient();
       final response = await _client.from('posts').select().order('created_at', ascending: false);
-      // debugPrint(response.toString());
-      // debugPrint(response.runtimeType.toString());
       List<PostModel> models =
           response.map((json) => PostModel.fromJson(json)).toList();
-      // debugPrint(models.runtimeType.toString());
-      // models.map((model) => debugPrint(model.toString()));
       return models;
     } on PostgrestException catch (error) {
       debugPrint('Error fetching user: ${error.message}');

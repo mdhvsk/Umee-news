@@ -32,21 +32,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
             Navigator.of(context).pop();
           },
         ),
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.favorite_border, color: Colors.black),
-        //     onPressed: () {},
-        //   ),
-        //   const SizedBox(width: 8),
-        //   const Text(
-        //     '1.2K',
-        //     style: TextStyle(color: Colors.black, fontSize: 16),
-        //   ),
-        //   IconButton(
-        //     icon: const Icon(Icons.share, color: Colors.black),
-        //     onPressed: () {},
-        //   ),
-        // ],
       ),
       body: SingleChildScrollView(
 
@@ -106,14 +91,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
                 _model.content
               ),
               const SizedBox(height: 16),
-              // Container(
-              //   padding: const EdgeInsets.all(8),
-              //   decoration: BoxDecoration(
-              //     color: Colors.grey[200],
-              //     borderRadius: BorderRadius.circular(8),
-              //   ),
-    
-              // ),
             ],
           ),
         ),

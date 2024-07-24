@@ -28,7 +28,7 @@ class LikeService {
           .eq('post_id', postId);
       if (response == null) return false;
       if (response.length == 0) return false;
-      return true; 
+      return true;
     } on PostgrestException catch (error) {
       debugPrint('Error fetching user: ${error.message}');
       return null;
@@ -64,13 +64,8 @@ class LikeService {
       await _initializeClient();
       final response =
           await _client.from('likes').select().eq('post_id', postId);
-      // debugPrint(response.toString());
-      // debugPrint(response.runtimeType.toString());
       List<LikeModel> models =
           response.map((json) => LikeModel.fromJson(json)).toList();
-      // debugPrint(models.runtimeType.toString());
-      // models.map((model) => debugPrint(model.toString()));
-      // debugPrint(models.length.toString());
       return models.length;
     } on PostgrestException catch (error) {
       debugPrint('Error fetching user: ${error.message}');

@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Gathers all article data from post, like, user, and image service
+
 class PostCardService {
   late SupabaseClient _client;
   bool _isInitialized = false;
@@ -48,20 +50,19 @@ class PostCardService {
         String created_at = articleModels[i]!.created_at.toIso8601String();
         String? image_id = articleModels[i]!.image_id;
         if (postId == null) continue;
-        // debugPrint("$postId, $title, $content, $created_at, $image_id");
         int likeCount = 0;
         likeCount = await likeService.getLikeCount(articleModels[i]!.id);
-        debugPrint(articleModels[i]!.id.toString());
-        bool? isLiked =
-            await likeService.getLike(userId, articleModels[i]!.id);
+        bool? isLiked = await likeService.getLike(userId, articleModels[i]!.id);
 
         if (isLiked == null) isLiked = false;
 
-        UserModel? user = await userService.getUserById(articleModels[i]!.user_id);
+        UserModel? user =
+            await userService.getUserById(articleModels[i]!.user_id);
         if (user == null) {
           debugPrint("no user");
           continue;
-        };
+        }
+        ;
         String first_name = user.firstName;
         String last_name = user.lastName;
         String? image_url = null;
@@ -82,10 +83,9 @@ class PostCardService {
             isLiked: isLiked);
 
         postCardModels.add(newModel);
-        debugPrint(newModel.isLiked.toString());
       }
-    PostCardModel sample = postCardModels[0];
-    return postCardModels;
+      PostCardModel sample = postCardModels[0];
+      return postCardModels;
     } catch (err) {
       debugPrint(err.toString());
     }
